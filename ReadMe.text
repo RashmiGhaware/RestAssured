@@ -1,0 +1,31 @@
+Steps to create RestAsdsured Project 
+
+1.Create Mavaeb Project 
+2.Add restAsurred,testNg,Cucumber, dependancy 
+3.Install cucumber plugin from eclipse MarketPlace also install Natural plugin for cucumber 
+
+
+
+
+
+
+RequestSpecification:
+In RESTful APIs, a RequestSpecification is a part of the RestAssured library, which is used to build and define the specifications for an HTTP request.
+Think of it as a blueprint or template that specifies how your HTTP request should be constructed before sending it to the server.
+
+ResponseSpecification:
+When you send an HTTP request to a server (like GET, POST, etc.), the server sends back a response.
+This response contains information such as status code, headers, and response body.
+ResponseSpecification is a feature provided by libraries like RestAssured in Java.
+It helps you define the expected properties of an HTTP response.
+
+Response:
+The Response object in RestAssured allows you to access and inspect the details of the response received from the server. This includes:
+Status code: Indicates whether the request was successful (e.g., 200 for OK), or if there was an error (e.g., 404 for Not Found).
+Headers: Contains metadata associated with the response, such as content type, encoding, and cookies.
+Body: Contains the content of the response, which could be in JSON, XML, HTML, or plain text format.
+
+
+TestDataBuild:
+
+  
