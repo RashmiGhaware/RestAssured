@@ -17,8 +17,13 @@ import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 
 public class Utils {
+	//The Utils class contains utility methods for setting up request specifications and extracting values from JSON responses.
+	//Here's a breakdown of the class:
 
 	public static RequestSpecification req;
+	//requestSpecification(): This method sets up the request specification using RestAssured. It initializes a RequestSpecBuilder, sets the base URI to a global value obtained from getGlobalValue(),
+	//adds query parameters, logging filters for request and response, sets content type to JSON, and builds the request specification. It returns the request specification.
+	
 	public RequestSpecification requestSpecification() throws IOException
 	{
 		
@@ -50,10 +55,15 @@ public class Utils {
 	
 	 public static String getGlobalValue() {
 	        return "https://rahulshettyacademy.com";
+	        //getGlobalValue(): This method returns the base URI for the API requests. Currently, it returns a hardcoded value "https://rahulshettyacademy.com". 
+	        //You can modify this method to read the base URI from a properties file or any other configuration source if needed.
 	    }
 	
 	public String getJsonPath(Response response,String key)
 	{
+		//This method extracts a value from the JSON response using the specified key. It converts the response to a string, creates a JsonPath object,
+		//and retrieves the value corresponding to the given key.
+		
 		  String resp=response.asString();
 		JsonPath   js = new JsonPath(resp);
 		return js.get(key).toString();

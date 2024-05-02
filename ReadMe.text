@@ -25,7 +25,93 @@ Status code: Indicates whether the request was successful (e.g., 200 for OK), or
 Headers: Contains metadata associated with the response, such as content type, encoding, and cookies.
 Body: Contains the content of the response, which could be in JSON, XML, HTML, or plain text format.
 
+===================================================================================================
+Utils class:
+ 1.  public RequestSpecification requestSpecification() throws IOException {
+  This line defines a method named requestSpecification() that returns a RequestSpecification object and may throw an IOException.
+ 2.if(req==null) {
+  This if statement checks whether the static variable req is null. If req is null, it means that the request specification object has not been initialized yet.
+3.PrintStream log = new PrintStream(new FileOutputStream("logging.txt"));
 
-TestDataBuild:
+  
+FileOutputStream is a class in Java used for writing data to a file.
+"logging.txt" is the name of the file to which data will be written.
+If the file "logging.txt" doesn't exist, it will be created. If it already exists, its contents will be overwritten.
+ 
+PrintStream is a class in Java used for printing formatted representations of objects to an output stream.
+The PrintStream constructor takes an output stream as its argument.
+In this case, the output stream is the FileOutputStream created in the previous step.
+ 
+4.req = new RequestSpecBuilder()
+        .setBaseUri(getGlobalValue())
+        .addQueryParam("key", "qaclick123")
+        .addFilter(RequestLoggingFilter.logRequestTo(log))
+        .addFilter(ResponseLoggingFilter.logResponseTo(log))
+        .setContentType(ContentType.JSON)
+        .build();
+
+Inside this block, a new RequestSpecification object is created using a RequestSpecBuilder. Various properties of the request specification are set, including the base URI, query parameters, content type (JSON in this case), and logging filters for both request and response. The logging filters ensure that request and response details are logged to the log stream.
+
+5.return req;
+ After the RequestSpecification object req is created, it is returned.
+
+
+
+
+
+
+It is a static method that takes a String parameter key.
+It throws an IOException.
+Inside the method:
+It creates a new Properties object named prop.
+It creates a new FileInputStream object fis to read from a properties file located at a specific path (C:\\Users\\Dell\\eclipse-workspace\\RestAssuredPractice\\src\\test\\java\\resources).
+It loads the properties from the fis stream into the prop object using the load() method.
+It retrieves the property value associated with the provided key using the getProperty() method.
+
+
+getGlobalValue():
+This is a public static method named getGlobalValue() that returns a String.
+It does not take any parameters.
+It simply returns the URL "https://rahulshettyacademy.com".
+This method is used to provide a global base URL for REST API requests.
+getJsonPath(Response response, String key):
+This is a non-static method named getJsonPath() that returns a String.
+It takes two parameters: a Response object and a String key.
+Inside the method:
+It converts the response body to a String using the asString() method of the Response object.
+It creates a new JsonPath object js using the response body String.
+It retrieves the value associated with the provided key from the JSON response using the get() method of the JsonPath object.
+It converts the retrieved value to a String and returns it.
+This method is used to extract values from JSON responses based on provided keys.
+
+
+
+
+Feature: Validating Place API's
+This line declares the feature being tested, which is validating Place APIs.
+Tags:
+@AddPlace and @Regression: These are tags used to categorize and filter scenarios. For example, @AddPlace could indicate scenarios related to adding a place, while @Regression could indicate scenarios meant to ensure existing functionalities are not affected by new changes.
+Scenario Outline: Verify if Place is being Successfully added using AddPlaceAPI
+This scenario outlines the steps to verify if a place is successfully added using the AddPlaceAPI.
+It uses placeholders <name>, <language>, and <address> which will be replaced by actual values from the Examples table.
+Given, When, Then Steps:
+Given: Sets up the initial state or context of the scenario. It prepares the payload with the specified name, language, and address.
+When: Represents the action taken by the user, which is calling the AddPlaceAPI with a POST HTTP request.
+Then: Defines the expected outcomes. In this case, it expects the API call to be successful (status code 200) and checks specific fields in the response body (status and scope).
+Examples Table:
+This table provides different combinations of values for the placeholders used in the Scenario Outline. It allows the scenario to be executed multiple times with different input values.
+Tags (Again):
+@DeletePlace @Regression: Another scenario tagged for deletion of a place, also categorized under regression testing.
+Scenario: Verify if Delete Place functionality is working
+This scenario tests the functionality of deleting a place.
+It follows a similar structure to the previous scenario with Given, When, Then steps.
+The expected outcome here is that the deletion call returns a status code of 200 and the response body contains the status as "OK".
+	 
+
+
+	
+
+	
+	
 
   

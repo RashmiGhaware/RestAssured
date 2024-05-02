@@ -2,6 +2,7 @@ package stepDefinations;
 
 import static io.restassured.RestAssured.given;
 
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -24,17 +25,21 @@ import resources.APIResources;
 import resources.TestDataBuild;
 import resources.Utils;
 
+//The StepDefination class contains step definitions for Cucumber scenarios related to adding and deleting places. 
+//It interacts with RESTful APIs using RestAssured and defines methods to build request payloads, make API calls, and verify responses.
+
 public class StepDefination extends Utils {
-	RequestSpecification res;
-	ResponseSpecification resspec;
-	Response response;
-	TestDataBuild data =new TestDataBuild();
-	static String place_id;
+	RequestSpecification res;                 //res: RequestSpecification object to build HTTP requests.
+	ResponseSpecification resspec;            //resspec: ResponseSpecification object to define expected response properties.
+	Response response;                        //Response object to store the API response.
+	TestDataBuild data =new TestDataBuild();  // TestDataBuild object to build test data payloads.
+	static String place_id;                   //Static variable to store the ID of the created place.
 	
 
 @Given("Add Place Payload with {string}  {string} {string}")
 public void add_Place_Payload_with(String name, String language, String address) throws IOException {
 	    // Write code here that turns the phrase above into concrete actions
+	// Builds the request payload for adding a place.
 	
 		 
 		 res=given().spec(requestSpecification())
@@ -45,6 +50,7 @@ public void add_Place_Payload_with(String name, String language, String address)
 public void user_calls_with_http_request(String resource, String method) {
 	    // Write code here that turns the phrase above into concrete actions
 //constructor will be called with value of resource which you pass
+	//Makes an HTTP request to the specified resource with the given method (POST or GET).
 		APIResources resourceAPI=APIResources.valueOf(resource);
 		System.out.println(resourceAPI.getResource());
 		
@@ -61,6 +67,7 @@ public void user_calls_with_http_request(String resource, String method) {
 	@Then("the API call got success with status code {int}")
 	public void the_API_call_got_success_with_status_code(Integer int1) {
 	    // Write code here that turns the phrase above into concrete actions
+		//Verifies that the API call was successful with the expected status code.
 		assertEquals(response.getStatusCode(),200);
 		
 	
@@ -69,13 +76,14 @@ public void user_calls_with_http_request(String resource, String method) {
 	@Then("{string} in response body is {string}")
 	public void in_response_body_is(String keyValue, String Expectedvalue) {
 	    // Write code here that turns the phrase above into concrete actions
+		// Verifies that the specified key in the response body has the expected value.
 	  
 	 assertEquals(getJsonPath(response,keyValue),Expectedvalue);
 	}
 	
 	@Then("verify place_Id created maps to {string} using {string}")
 	public void verify_place_Id_created_maps_to_using(String expectedName, String resource) throws IOException {
-	
+	//Verifies that the created place ID maps to the expected name using the specified resource (GET).
 	   // requestSpec
 	     place_id=getJsonPath(response,"place_id");
 		 res=given().spec(requestSpecification()).queryParam("place_id",place_id);
@@ -90,6 +98,7 @@ public void user_calls_with_http_request(String resource, String method) {
 @Given("DeletePlace Payload")
 public void deleteplace_Payload() throws IOException {
     // Write code here that turns the phrase above into concrete actions
+	//Builds the request payload for deleting a place.
    
 	res =given().spec(requestSpecification()).body(data.deletePlacePayload(place_id));
 }
